@@ -3,7 +3,9 @@ const api = require('./api/api');
 const queryString = require('query-string');
 const DayItem = require('./DayItem');
 const Graph = require('./Graph');
-const fs = require('fs');
+const _ = require('lodash');
+
+const localstorage = window.localStorage;
 
 class Forecast extends React.Component {
   constructor(props) {
@@ -24,18 +26,17 @@ class Forecast extends React.Component {
     this.makeRequest(this.city);
   }
   makeRequest(city) {
-    /* Here I need to implement the logic which has to check if I have data for
-    this city locally and should I create a new file with the data from the api.
-   */
-    // console.log(fs.existsSync('/temp'));
-    // fs.exists('/temp', (exists) => {
-    //   console.log(exists);
-    // });
     this.setState(() => ({
       loading: true,
     }));
     api.getForecast(city)
-      .then((res) => {
+      .then(() => {
+        const res = {};
+        res.list = [];
+        _.forEach(JSON.parse(localstorage.getItem(city)), (record) => {
+          res.city = record.city;
+          res.list.push(record.list[0]);
+        });
         this.setState(() => ({
           loading: false,
           forecastData: res,

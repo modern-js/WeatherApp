@@ -14,7 +14,7 @@ function Graph(props) {
       <LineChart
         data={data}
       >
-        <XAxis dataKey="Degrees" />
+        <XAxis />
         <YAxis />
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
