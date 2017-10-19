@@ -35,7 +35,7 @@ class Forecast extends React.Component {
         res.list = [];
         _.forEach(JSON.parse(localstorage.getItem(city)), (record) => {
           res.city = record.city;
-          res.list.push(record.list[0]);
+          res.list.push(record.weather);
         });
         this.setState(() => ({
           loading: false,

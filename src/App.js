@@ -31,7 +31,6 @@ class App extends React.Component {
                     search: `?city=${city}`,
                   });
                 }}
-                zipcode={123}
               />
             </div>
           )}
@@ -51,7 +50,6 @@ class App extends React.Component {
                       search: `?city=${city}`,
                     });
                   }}
-                  zipcode={123}
                 />
               </div>
             )}

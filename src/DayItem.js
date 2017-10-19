@@ -8,7 +8,7 @@ function DayItem(props) {
     <div onClick={props.onClick} className="dayContainer">
       <img className="weather" src={require(`./api/images/${icon}.svg`)} alt="Weather" />
       <h2 className="subheader">{date}</h2>
-      <h3>{helpers.convertTemp(props.day.temp.day)} degrees</h3>
+      <h3>{props.day.temp.day} degrees</h3>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 const axios = require('axios');
 const helpers = require('./helpers');
+const _ = require('lodash');
 
 const localstorage = window.localStorage;
 
@@ -17,7 +18,8 @@ function getQueryStringData(city) {
     q: city,
     type: 'accurate',
     APPID: '542ffd081e67f4512b705f89d2a611b2',
-    cnt: 1,
+    cnt: 5,
+    units: 'metric',
   };
 }
 
@@ -26,9 +28,15 @@ function getForecast(city) {
   const url = prepUrl('forecast/daily', queryStringData);
   return axios.get(url)
     .then((forecastData) => {
-      localstorage.setItem(forecastData.data.city.name, JSON.stringify({
-        [helpers.getFullDate(forecastData.data.list[0].dt)]: forecastData.data,
-      }));
+      const temp = {};
+      _.forEach(forecastData.data.list, (item) => {
+        _.set(temp, [helpers.getFullDate(item.dt)], {
+          city: forecastData.data.city,
+          weather: item,
+        },
+        );
+      });
+      localstorage.setItem(forecastData.data.city.name, JSON.stringify(temp));
     });
 }
 
